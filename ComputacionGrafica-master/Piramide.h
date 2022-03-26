@@ -10,10 +10,11 @@
 
 class Piramide
 {
-	protected:
-		GLMmodel* objmodel_ptr1;
+	//protected:
+		//GLMmodel* objmodel_ptr1;
 	public:
 		Piramide() {};
-		void dibujarPiramide(GLMmodel* objmodel_ptr1, GLuint texid);
+		void dibujarPiramide(GLMmodel *objmodel_ptr1, GLuint texid);
+		void abrirMalla();
 		~Piramide() {};
 };

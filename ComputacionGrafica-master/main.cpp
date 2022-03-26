@@ -24,12 +24,14 @@ protected:
    cwc::glShaderManager SM;
    cwc::glShader *shader;
    cwc::glShader* shader1; //Para Textura: variable para abrir los shader de textura
+   cwc::glShader* shader2;
    GLuint ProgramObject;
    clock_t time0,time1;
    float timer010;  // timer counting 0->1->0
    bool bUp;        // flag if counting up or down.
    GLMmodel* objmodel_ptr;
    GLMmodel* objmodel_ptr1; //*** Para Textura: variable para objeto texturizado
+   GLMmodel* objmodel_ptr2;
    GLuint texid; //*** Para Textura: variable que almacena el identificador de textura
    Gorila* gorila;
    Mundo* mundo;
@@ -88,11 +90,15 @@ public:
 	  //*** Para Textura: llamado al shader para objetos texturizados
 	  
 	  if (shader1) shader1->begin();
-
 		piramide->dibujarPiramide(objmodel_ptr1, texid);
 	  //glutSolidTeapot(1.0);
 	  if (shader1) shader1->end();
 	 
+
+	  if (shader2) shader2->begin();
+		gorila->dibujarGorila(objmodel_ptr2);
+		//glutSolidTeapot(1.0);
+	  if (shader2) shader2->end();
 
       glutSwapBuffers();
       glPopMatrix();
@@ -106,6 +112,9 @@ public:
 
 	// When OnInit is called, a render context (in this case GLUT-Window) 
 	// is already available!
+
+
+	// El abrir los objetos deberia poderse desde cada clase, pero por alguna razon me crasheo de todas las formas en las que lo intente
 	virtual void OnInit()
 	{
 		glClearColor(0.5f, 0.5f, 1.0f, 0.0f);
@@ -118,6 +127,14 @@ public:
 		else
 		{
 			ProgramObject = shader->GetProgramObject();
+		}
+
+		shader2 = SM.loadfromFile("vertexshader.txt", "fragmentshader.txt"); // load (and compile, link) from file
+		if (shader2 == 0)
+			std::cout << "Error Loading, compiling or linking shader\n";
+		else
+		{
+			ProgramObject = shader2->GetProgramObject();
 		}
 
 	 //*** Para Textura: abre los shaders para texturas
@@ -149,7 +166,6 @@ public:
 
 
 	  //*** Para Textura: abrir malla de objeto a texturizar
-	 
 	  objmodel_ptr1 = NULL;
 
 	  if (!objmodel_ptr1)
@@ -162,6 +178,21 @@ public:
 		  glmFacetNormals(objmodel_ptr1);
 		  glmVertexNormals(objmodel_ptr1, 90.0);
 	  }
+
+	  objmodel_ptr2 = NULL;
+
+	  if (!objmodel_ptr2)
+	  {
+		  objmodel_ptr2 = glmReadOBJ("./Mallas/gorila.obj");
+		  if (!objmodel_ptr2)
+			  exit(0);
+
+		  glmUnitize(objmodel_ptr2);
+		  glmFacetNormals(objmodel_ptr2);
+		  glmVertexNormals(objmodel_ptr2, 90.0);
+	  }
+
+	  //piramide->abrirMalla();
 	  
 	  //*** Para Textura: abrir archivo de textura
 	  initialize_textures();

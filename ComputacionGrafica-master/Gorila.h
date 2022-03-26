@@ -12,7 +12,7 @@ class Gorila
 {
 	public:
 		Gorila() {};
-		void dibujarGorila(float posX, float posY, float posZ);
+		void dibujarGorila(GLMmodel* gorila);
 		~Gorila() {};
 
 };
