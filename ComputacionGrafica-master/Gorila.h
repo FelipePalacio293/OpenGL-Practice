@@ -12,7 +12,8 @@ class Gorila
 {
 	public:
 		Gorila() {};
-		void dibujarGorila(GLMmodel* gorila);
+		void dibujarGorila(GLMmodel* gorila, float posX, float posZ);
+		void moverGorila();
 		~Gorila() {};
 
 };

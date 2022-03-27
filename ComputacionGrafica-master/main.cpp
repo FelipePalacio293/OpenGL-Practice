@@ -36,9 +36,26 @@ protected:
    Gorila* gorila;
    Mundo* mundo;
    Piramide* piramide;
+   bool xLeft, xRight, zFront, zBack;
+   float posX, posZ;
 
 public:
 	myWindow(){}
+	
+	void mover() {
+		if (xLeft) {
+			posX = posX - 0.05;
+		}
+		if (xRight) {
+			posX = posX + 0.05;
+		}
+		if (zFront) {
+			posZ = posZ + 0.05;
+		}
+		if (zBack) {
+			posZ = posZ - 0.05;
+		}
+	}
 
 	//*** Para Textura: aqui adiciono un método que abre la textura en JPG
 	void initialize_textures(void)
@@ -82,7 +99,7 @@ public:
 
       glPushMatrix();
 	  //glRotatef(timer010 * 360, 0.5, 1.0f, 0.1f);
-
+	  mover();
 	  if (shader) shader->begin();
 		mundo->dibujarMundo(objmodel_ptr);
 	  if (shader) shader->end();
@@ -96,7 +113,7 @@ public:
 	 
 
 	  if (shader2) shader2->begin();
-		gorila->dibujarGorila(objmodel_ptr2);
+		gorila->dibujarGorila(objmodel_ptr2, posX, posZ);
 		//glutSolidTeapot(1.0);
 	  if (shader2) shader2->end();
 
@@ -114,9 +131,15 @@ public:
 	// is already available!
 
 
-	// El abrir los objetos deberia poderse desde cada clase, pero por alguna razon me crasheo de todas las formas en las que lo intente
 	virtual void OnInit()
 	{
+		xLeft = false;
+		xRight = false;
+		zFront = false;
+		zBack = false;
+		posZ = 2;
+		posX = -1.5;
+
 		glClearColor(0.5f, 0.5f, 1.0f, 0.0f);
 		glShadeModel(GL_SMOOTH);
 		glEnable(GL_DEPTH_TEST);
@@ -151,6 +174,8 @@ public:
       bUp = true;
 
 	  //Abrir mallas
+	  // El abrir las mallas de los objetos deberia poderse desde cada clase, pero por alguna razon me crasheo de todas las formas en las que lo intente
+
 	  objmodel_ptr = NULL;
 
 	  if (!objmodel_ptr)
@@ -229,14 +254,42 @@ public:
 		{
 			this->Close(); // Close Window!
 		} 
+
+		switch (cAscii) {
+			case 27:
+				this->Close();
+				break;
+			case('a'):
+				xLeft = true;
+				break;
+			case('d'):
+				xRight = true;
+				break;
+			case('w'):
+				zFront = true;
+				break;
+			case('s'):
+				zBack = true;
+				break;
+		}
 	};
 
 	virtual void OnKeyUp(int nKey, char cAscii)
 	{
-      if (cAscii == 's')      // s: Shader
-         shader->enable();
-      else if (cAscii == 'f') // f: Fixed Function
-         shader->disable();
+		switch (cAscii) {
+			case('a'):
+				xLeft = false;
+				break;
+			case('d'):
+				xRight = false;
+				break;
+			case('w'):
+				zFront = false;
+				break;
+			case('s'):
+				zBack = false;
+				break;
+		}
 	}
 
    void UpdateTimer()
