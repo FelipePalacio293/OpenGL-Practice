@@ -4,11 +4,11 @@
 
 void Gorila::dibujarGorila(GLMmodel *gorila, float posX, float posZ) {
 	glPushMatrix();
-	glTranslatef(posX, 0.0f, posZ);
+	glTranslatef(0.0f, -0.85f, 2.5f);
 	glRotatef(270, 1.0f, 0, 0);
-	
+	glScalef(0.05f, 0.05f, 0.05f);
 	glmDraw(gorila, GLM_SMOOTH);
-	//glScalef(5.0f, 5.0f, 5.0f);
+	
 	glPopMatrix();
 	//glutSolidTeapot(1.0);
 }

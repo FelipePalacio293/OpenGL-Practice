@@ -6,10 +6,13 @@ void Piramide::abrirMalla() {
 
 }
 
-void Piramide::dibujarPiramide(GLMmodel *objmodel_ptr1, GLuint texid) {
+void Piramide::dibujarPiramide(GLMmodel *objmodel_ptr1, GLuint texid, float posX, float posZ) {
 	glPushMatrix();
-	glTranslatef(1.5f, 0.0f, 0.0f);
+	glTranslatef(posX, -0.7f, posZ);
+	glScalef(0.3f, 0.3f, 0.3f);
+
 	glBindTexture(GL_TEXTURE_2D, texid);
+
 	glmDraw(objmodel_ptr1, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
 	glPopMatrix();
 }

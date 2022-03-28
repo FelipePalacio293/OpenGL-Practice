@@ -14,7 +14,7 @@ class Piramide
 		//GLMmodel* objmodel_ptr1;
 	public:
 		Piramide() {};
-		void dibujarPiramide(GLMmodel *objmodel_ptr1, GLuint texid);
+		void dibujarPiramide(GLMmodel *objmodel_ptr1, GLuint texid, float posX, float posZ);
 		void abrirMalla();
 		~Piramide() {};
 };

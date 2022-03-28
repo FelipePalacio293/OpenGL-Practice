@@ -12,7 +12,7 @@ class Mundo
 {
 	public:
 		Mundo() {};
-		void dibujarMundo(GLMmodel* objmodel_ptr1);
+		void dibujarMundo(GLMmodel* objmodel_ptr1, float posX, float posZ);
 		~Mundo() {};
 };
 

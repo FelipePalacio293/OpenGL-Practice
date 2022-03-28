@@ -75,7 +75,7 @@ public:
 
 		// Loading JPG file
 		FIBITMAP* bitmap = FreeImage_Load(
-			FreeImage_GetFileType("./Mallas/bola.jpg", 0),
+			FreeImage_GetFileType("./Mallas/piramide.jpg", 0),
 			"./Mallas/piramide.jpg");  //*** Para Textura: esta es la ruta en donde se encuentra la textura
 
 		FIBITMAP* pImage = FreeImage_ConvertTo32Bits(bitmap);
@@ -100,22 +100,24 @@ public:
       glPushMatrix();
 	  //glRotatef(timer010 * 360, 0.5, 1.0f, 0.1f);
 	  mover();
+	  glTranslatef(0.0f, 0.5f, 0.0f);
 	  if (shader) shader->begin();
-		mundo->dibujarMundo(objmodel_ptr);
+		mundo->dibujarMundo(objmodel_ptr, posX, posZ);
 	  if (shader) shader->end();
 
 	  //*** Para Textura: llamado al shader para objetos texturizados
 	  
 	  if (shader1) shader1->begin();
-		piramide->dibujarPiramide(objmodel_ptr1, texid);
+		piramide->dibujarPiramide(objmodel_ptr1, texid, posX, posZ);
 	  //glutSolidTeapot(1.0);
 	  if (shader1) shader1->end();
 	 
 
 	  if (shader2) shader2->begin();
-		gorila->dibujarGorila(objmodel_ptr2, posX, posZ);
+		gorila->dibujarGorila(objmodel_ptr2, 0, 0);
 		//glutSolidTeapot(1.0);
 	  if (shader2) shader2->end();
+
 
       glutSwapBuffers();
       glPopMatrix();
@@ -137,8 +139,8 @@ public:
 		xRight = false;
 		zFront = false;
 		zBack = false;
-		posZ = 2;
-		posX = -1.5;
+		posZ = 0;
+		posX = 0;
 
 		glClearColor(0.5f, 0.5f, 1.0f, 0.0f);
 		glShadeModel(GL_SMOOTH);
@@ -259,16 +261,16 @@ public:
 			case 27:
 				this->Close();
 				break;
-			case('a'):
+			case('d'):
 				xLeft = true;
 				break;
-			case('d'):
+			case('a'):
 				xRight = true;
 				break;
-			case('w'):
+			case('s'):
 				zFront = true;
 				break;
-			case('s'):
+			case('w'):
 				zBack = true;
 				break;
 		}
@@ -277,16 +279,16 @@ public:
 	virtual void OnKeyUp(int nKey, char cAscii)
 	{
 		switch (cAscii) {
-			case('a'):
+			case('d'):
 				xLeft = false;
 				break;
-			case('d'):
+			case('a'):
 				xRight = false;
 				break;
-			case('w'):
+			case('s'):
 				zFront = false;
 				break;
-			case('s'):
+			case('w'):
 				zBack = false;
 				break;
 		}
